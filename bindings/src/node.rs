@@ -86,7 +86,13 @@ impl<'tree> Node<'tree> {
         unsafe { ts_node_language(self.as_raw()) }
     }
 
+    /// Check if this node is *extra*.
+    #[inline]
+    pub fn is_extra(&self) -> bool {
+        unsafe { ts_node_is_extra(self.as_raw()) }
+    }
     /// Check if this node is *named*.
+
     ///
     /// Named nodes correspond to named rules in the grammar, whereas
     /// *anonymous* nodes correspond to string literals in the grammar.
@@ -280,6 +286,9 @@ extern "C" {
     /// the grammar, whereas *anonymous* nodes correspond to string literals in
     /// the grammar
     fn ts_node_is_named(node: NodeRaw) -> bool;
+
+    /// Check if the node is *extra*.
+    fn ts_node_is_extra(node: NodeRaw) -> bool;
 
     /// Check if the node is *missing*. Missing nodes are inserted by the parser
     /// in order to recover from certain kinds of syntax errors
